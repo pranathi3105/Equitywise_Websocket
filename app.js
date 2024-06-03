@@ -14,7 +14,7 @@ wss.on('connection', (ws) => {
       const { apiKey, functionType, symbol, outputSize,interval } = data;
 
       // Construct the Alpha Vantage API URL
-      const url = `https://www.alphavantage.co/query?function=${functionType}&symbol=${symbol}&outpitsize=${outputSize}&apikey=${apiKey}&interval=${interval}`;
+      const url = `https://www.alphavantage.co/query?function=${functionType}&symbol=${symbol}&outpitsize=${outputSize}&interval=${interval}&apikey=${apiKey}`;
 
 
       console.log(url);
