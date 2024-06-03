@@ -1,7 +1,8 @@
 const WebSocket = require('ws');
 const axios = require('axios');
 
-const wss = new WebSocket.Server({ port: 8080 });
+const port = process.env.PORT || 8080;
+const wss = new WebSocket.Server({ port });
 
 wss.on('connection', (ws) => {
   console.log('Client connected');
@@ -11,20 +12,17 @@ wss.on('connection', (ws) => {
 
     try {
       const data = JSON.parse(message);
-      const { apiKey, functionType, symbol, outputSize,interval } = data;
+      const { apiKey, functionType, symbol, interval } = data;
 
       // Construct the Alpha Vantage API URL
-      const url = `https://www.alphavantage.co/query?function=${functionType}&symbol=${symbol}&outpitsize=${outputSize}&interval=${interval}&apikey=${apiKey}`;
+      const url = `https://www.alphavantage.co/query?function=${functionType}&symbol=${symbol}&interval=${interval}&apikey=${apiKey}`;
 
-
-      console.log(url);
       // Make the API request
       const response = await axios.get(url);
-      console.log("resrponse: ",response);
+
       // Send the API response back to the client
       ws.send(JSON.stringify(response.data));
     } catch (error) {
-      console.log("catch error: ",error.message);
       console.error('Error making API request:', error);
       ws.send(JSON.stringify({ error: 'Error making API request' }));
     }
@@ -33,5 +31,10 @@ wss.on('connection', (ws) => {
   ws.on('close', () => {
     console.log('Client disconnected');
   });
+
+  ws.on('error', (error) => {
+    console.error('WebSocket error:', error);
+  });
 });
 
+console.log(`WebSocket server is listening on ws://localhost:${port}`);
