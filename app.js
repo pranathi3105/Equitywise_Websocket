@@ -17,13 +17,14 @@ wss.on('connection', (ws) => {
       const url = `https://www.alphavantage.co/query?function=${functionType}&symbol=${symbol}&outputsize=${outputSize}&apikey=${apiKey}&interval=${interval}`;
 
 
-
+      console.log(url);
       // Make the API request
       const response = await axios.get(url);
-      
+      console.log(response);
       // Send the API response back to the client
       ws.send(JSON.stringify(response.data));
     } catch (error) {
+      console.log(error);
       console.error('Error making API request:', error);
       ws.send(JSON.stringify({ error: 'Error making API request' }));
     }
@@ -34,4 +35,3 @@ wss.on('connection', (ws) => {
   });
 });
 
-console.log('WebSocket server is listening on ws://localhost:8080');
