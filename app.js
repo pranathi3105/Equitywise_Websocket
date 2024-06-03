@@ -20,11 +20,11 @@ wss.on('connection', (ws) => {
       console.log(url);
       // Make the API request
       const response = await axios.get(url);
-      console.log(response);
+      console.log("resrponse: ",response);
       // Send the API response back to the client
       ws.send(JSON.stringify(response.data));
     } catch (error) {
-      console.log(error);
+      console.log("catch error: ",error.message);
       console.error('Error making API request:', error);
       ws.send(JSON.stringify({ error: 'Error making API request' }));
     }
