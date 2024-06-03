@@ -12,6 +12,7 @@ wss.on('connection', (ws) => {
 
     try {
       const data = JSON.parse(message);
+      console.log("data: ", data);
       const { apiKey, functionType, symbol, interval } = data;
 
       // Construct the Alpha Vantage API URL
@@ -22,7 +23,9 @@ wss.on('connection', (ws) => {
 
       // Send the API response back to the client
       ws.send(JSON.stringify(response.data));
-    } catch (error) {
+    } 
+    catch (error) 
+    {
       console.error('Error making API request:', error);
       ws.send(JSON.stringify({ error: 'Error making API request' }));
     }
@@ -33,7 +36,7 @@ wss.on('connection', (ws) => {
   });
 
   ws.on('error', (error) => {
-    console.error('WebSocket error:', error);
+    console.error('WebSocket error:', error.message);
   });
 });
 
