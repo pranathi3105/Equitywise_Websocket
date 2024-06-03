@@ -11,10 +11,12 @@ wss.on('connection', (ws) => {
 
     try {
       const data = JSON.parse(message);
-      const { apiKey, functionType, symbol, outputSize } = data;
+      const { apiKey, functionType, symbol, outputSize,interval } = data;
 
       // Construct the Alpha Vantage API URL
-      const url = `https://www.alphavantage.co/query?function=${functionType}&symbol=${symbol}&outputsize=${outputSize}&apikey=${apiKey}`;
+      const url = `https://www.alphavantage.co/query?function=${functionType}&symbol=${symbol}&outputsize=${outputSize}&apikey=${apiKey}&interval=${interval}`;
+
+
 
       // Make the API request
       const response = await axios.get(url);
